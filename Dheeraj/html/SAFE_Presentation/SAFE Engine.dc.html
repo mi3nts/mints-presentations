@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+<template id="__bundler_thumbnail" data-bg-color="#154734">
+  <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
+    <rect width="1200" height="800" fill="#154734"/>
+    <rect x="300" y="372" width="120" height="3" fill="#E87500"/>
+    <text x="300" y="350" font-family="Georgia, serif" font-size="118" font-weight="600" fill="#F4F1EA">SAFE</text>
+    <text x="300" y="470" font-family="Georgia, serif" font-style="italic" font-size="52" fill="#F4F1EA" opacity="0.82">Engine</text>
+    <circle cx="930" cy="400" r="150" fill="none" stroke="#E87500" stroke-width="6" opacity="0.5"/>
+    <circle cx="930" cy="400" r="14" fill="#E87500"/>
+  </svg>
+</template>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Libre+Franklin:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#F4F1EA; --ink:#16241D; --muted:#5C6A60;
+    --green:#154734; --green2:#2E6B4F; --orange:#E87500;
+    --line:rgba(21,71,52,.14); --card:#FFFFFF;
+    --mPM:#2E8B45; --mTemp:#E87500; --mPres:#2E6FB5;
+    --serif:'Spectral',Georgia,serif; --sans:'Libre Franklin',sans-serif; --mono:'IBM Plex Mono',monospace;
+  }
+  html,body{margin:0;padding:0;background:#000;}
+  *{box-sizing:border-box;}
+  @keyframes rise{from{opacity:0;transform:translateY(22px)}to{opacity:1;transform:none}}
+  @keyframes fade{from{opacity:0}to{opacity:1}}
+  @keyframes growx{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  @keyframes pop{from{opacity:0;transform:scale(.94)}to{opacity:1;transform:none}}
+  @keyframes spinin{from{opacity:0;transform:translateY(-50%) rotate(-18deg) scale(.8)}to{opacity:.16;transform:translateY(-50%)}}
+  @media (prefers-reduced-motion:no-preference){
+    [data-deck-active] .rise{animation:rise .65s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0s)}
+    [data-deck-active] .fade{animation:fade .8s ease both;animation-delay:var(--d,0s)}
+    [data-deck-active] .line{animation:growx .7s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0s);transform-origin:left}
+    [data-deck-active] .pop{animation:pop .6s cubic-bezier(.2,.7,.2,1) both;animation-delay:var(--d,0s)}
+    [data-deck-active] .roundel{animation:spinin .9s cubic-bezier(.2,.7,.2,1) both}
+  }
+</style>
+</helmet>
+<x-import component-from-global-scope="deck-stage" from="./deck-stage.js" width="1920" height="1080" hint-size="100%,100%">
+
+<!-- 1 · TITLE -->
+<section data-label="Title" data-screen-label="01 Title" data-speaker-notes="Hi everyone — this is the SAFE Engine, part of the MINTS-AI effort. SAFE stands for Sensor Analysis and Failure Evaluation. I'm Dheeraj, undergrad researcher in Computer Engineering." style="background:var(--green);color:var(--bg);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:120px 110px;display:flex;flex-direction:column;justify-content:center;overflow:hidden">
+    <img src="assets/p27-thanks.png" class="roundel" alt="" style="position:absolute;right:-120px;top:50%;transform:translateY(-50%);width:760px;opacity:.16;filter:saturate(1.1)"/>
+    <div class="rise" style="--d:.05s;font-family:var(--mono);font-size:24px;letter-spacing:.34em;text-transform:uppercase;color:var(--orange)">MINTS-AI · UT Dallas</div>
+    <div class="line" style="--d:.15s;width:120px;height:3px;background:var(--orange);margin:30px 0 26px"></div>
+    <h1 class="rise" style="--d:.22s;margin:0;font-family:var(--serif);font-weight:600;font-size:158px;line-height:.96;letter-spacing:-.02em">SAFE&nbsp;Engine</h1>
+    <p class="rise" style="--d:.32s;margin:26px 0 0;font-family:var(--serif);font-style:italic;font-weight:300;font-size:50px;color:rgba(244,241,234,.82)">Sensor Analysis &amp; Failure Evaluation</p>
+    <div class="rise" style="--d:.46s;margin-top:96px;display:flex;align-items:baseline;gap:22px">
+      <span style="font-size:34px;font-weight:600;letter-spacing:.01em">Dheeraj Somashekar</span>
+      <span style="width:7px;height:7px;border-radius:50%;background:var(--orange);transform:translateY(-6px)"></span>
+      <span style="font-size:26px;color:rgba(244,241,234,.7);font-weight:300">Undergraduate Student Researcher · Computer Engineering, B.S.</span>
+    </div>
+  </div>
+</section>
+
+<!-- 2 · INTRO -->
+<section data-label="Intro to SAFE" data-screen-label="02 Intro" data-speaker-notes="At a high level SAFE watches low-cost air-quality sensors for failures, outliers, and drift. Two gates: strict hard bounds throw out the physically impossible, then a rolling z-score flags the merely unusual. Everything is evaluated across four time scales and written out as CSVs and plots." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:96px 110px 110px;display:flex;flex-direction:column">
+    <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">01 — Overview</div>
+    <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:88px;line-height:1;letter-spacing:-.015em;color:var(--green)">Intro to SAFE</h2>
+    <div class="line" style="--d:.16s;width:100%;height:1px;background:var(--line);margin:42px 0 50px"></div>
+    <div style="flex:1;display:flex;gap:90px;align-items:flex-start">
+      <ul style="flex:1;list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:38px;max-width:920px">
+        <li class="rise" style="--d:.22s;display:flex;gap:26px;align-items:flex-start"><span style="flex:none;margin-top:13px;width:13px;height:13px;background:var(--orange)"></span><span style="font-size:34px;line-height:1.4">Detects sensor <strong style="font-weight:600;color:var(--green)">failures, outliers, and drift</strong> in low-cost air quality sensor data</span></li>
+        <li class="rise" style="--d:.30s;display:flex;gap:26px;align-items:flex-start"><span style="flex:none;margin-top:13px;width:13px;height:13px;background:var(--orange)"></span><span style="font-size:34px;line-height:1.4">Filters impossible readings using strict <strong style="font-weight:600;color:var(--green)">hard bounds</strong></span></li>
+        <li class="rise" style="--d:.38s;display:flex;gap:26px;align-items:flex-start"><span style="flex:none;margin-top:13px;width:13px;height:13px;background:var(--orange)"></span><span style="font-size:34px;line-height:1.4">Flags unusual readings with a rolling <strong style="font-weight:600;color:var(--green)">z-score</strong> detection algorithm</span></li>
+        <li class="rise" style="--d:.46s;display:flex;gap:26px;align-items:flex-start"><span style="flex:none;margin-top:13px;width:13px;height:13px;background:var(--orange)"></span><span style="font-size:34px;line-height:1.4">Generates <strong style="font-weight:600;color:var(--green)">CSV summaries and plots</strong> for visual analysis</span></li>
+      </ul>
+      <div class="pop" style="--d:.5s;flex:none;width:560px;align-self:stretch;background:var(--green);color:var(--bg);border-radius:6px;padding:54px 50px;display:flex;flex-direction:column">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.22em;text-transform:uppercase;color:var(--orange)">Compared across</div>
+        <div style="font-family:var(--serif);font-size:80px;font-weight:600;line-height:1;margin:14px 0 4px">4</div>
+        <div style="font-family:var(--serif);font-style:italic;font-size:32px;color:rgba(244,241,234,.8);margin-bottom:30px">time-period comparisons</div>
+        <div style="display:flex;flex-direction:column">
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-top:1px solid rgba(244,241,234,.18);font-size:30px"><span>Day-to-Day</span><span style="font-family:var(--mono);color:var(--orange);font-size:24px">1d</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-top:1px solid rgba(244,241,234,.18);font-size:30px"><span>Week-to-Week</span><span style="font-family:var(--mono);color:var(--orange);font-size:24px">7d</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-top:1px solid rgba(244,241,234,.18);font-size:30px"><span>Month-to-Month</span><span style="font-family:var(--mono);color:var(--orange);font-size:24px">1mo</span></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;padding:20px 0;border-top:1px solid rgba(244,241,234,.18);border-bottom:1px solid rgba(244,241,234,.18);font-size:30px"><span>Year-to-Year</span><span style="font-family:var(--mono);color:var(--orange);font-size:24px">1yr</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 3 · CORE ALGORITHM -->
+<section data-label="Core Algorithm" data-screen-label="03 Core Algorithm" data-speaker-notes="This is the full pipeline. A reading comes in, hits the hard-bounds gate, then z-score outlier detection against a rolling baseline. Consecutive outliers trigger a step-change reset. Clean readings update the running statistics, and when the window fills we run Welch's and Levene's tests, gate on a cooldown, and publish an alert." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:74px 88px 92px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Pipeline</div>
+        <h2 class="rise" style="--d:.08s;margin:12px 0 0;font-family:var(--serif);font-weight:600;font-size:72px;line-height:1;letter-spacing:-.015em;color:var(--green)">Core Algorithm</h2>
+      </div>
+      <div class="rise" style="--d:.14s;font-size:25px;color:var(--muted);max-width:560px;text-align:right;line-height:1.45">From raw reading to published alert — validation, anomaly detection, statistical testing, alerting.</div>
+    </div>
+    <div class="pop" style="--d:.2s;flex:1;margin-top:34px;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:30px;overflow:hidden">
+      <img src="assets/p3-chart.png" alt="SAFE Engine core algorithm flowchart" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/>
+    </div>
+  </div>
+</section>
+
+<!-- 4 · SECTION I -->
+<section data-label="§ I — Mean Response" data-screen-label="04 Section I" data-speaker-notes="Section one: the mean sensor response over time. How the period averages of each metric move across day, week, month, and year scales." style="background:var(--green);color:var(--bg);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:110px;display:flex;flex-direction:column;justify-content:center;overflow:hidden">
+    <div class="rise" style="--d:.05s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Section</div>
+    <div style="display:flex;align-items:flex-start;gap:54px;margin-top:18px">
+      <div class="rise" style="--d:.12s;font-family:var(--serif);font-weight:300;font-size:300px;line-height:.8;color:rgba(244,241,234,.16)">I</div>
+      <div style="padding-top:30px">
+        <h2 class="rise" style="--d:.2s;margin:0;font-family:var(--serif);font-weight:600;font-size:108px;line-height:1.02;letter-spacing:-.02em;max-width:1050px">Mean Sensor Response Over Time</h2>
+        <div class="line" style="--d:.3s;width:200px;height:3px;background:var(--orange);margin-top:40px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 5 · DAY TO DAY MEANS -->
+<section data-label="Day-to-Day means" data-screen-label="05 Day means" data-speaker-notes="Day-to-day period means. The line is the mean, the grey band is each period's min–max. Note the flat stretches — those are gaps where the node was offline." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Mean Response · 1 day</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:74px;line-height:1.02;letter-spacing:-.015em;color:var(--green)">Day-to-Day</h2>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">Period means for each metric, with the shaded band showing the day's min–max range. Flat stretches mark gaps where the node was offline.</p>
+      <div class="rise" style="--d:.3s;margin-top:42px;display:flex;flex-direction:column;gap:16px;font-size:24px">
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mPM);border-radius:3px"></span>PM1.0 (µg/m³)</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mTemp);border-radius:3px"></span>Temperature (°C)</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mPres);border-radius:3px"></span>Pressure (hPa)</span>
+      </div>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:34px;overflow:hidden">
+      <img src="assets/p5-chart.png" alt="Day to Day metric means over time" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/>
+    </div>
+  </div>
+</section>
+
+<!-- 6 · WEEK TO WEEK MEANS -->
+<section data-label="Week-to-Week means" data-screen-label="06 Week means" data-speaker-notes="Aggregating to weekly periods smooths the daily noise while keeping the seasonal envelope and the spring pressure climb visible." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Mean Response · 7 days</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:74px;line-height:1.02;letter-spacing:-.015em;color:var(--green)">Week-to-Week</h2>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">Weekly aggregation smooths daily noise while preserving the seasonal envelope and the spring climb in mean pressure.</p>
+      <div class="rise" style="--d:.3s;margin-top:42px;display:flex;flex-direction:column;gap:16px;font-size:24px">
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mPM);border-radius:3px"></span>PM1.0 (µg/m³)</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mTemp);border-radius:3px"></span>Temperature (°C)</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mPres);border-radius:3px"></span>Pressure (hPa)</span>
+      </div>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:34px;overflow:hidden">
+      <img src="assets/p6-chart.png" alt="Week to Week metric means over time" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/>
+    </div>
+  </div>
+</section>
+
+<!-- 7 · MONTH TO MONTH MEANS -->
+<section data-label="Month-to-Month means" data-screen-label="07 Month means" data-speaker-notes="Monthly means make the longest-range trends and the recent pressure rise the easiest to read." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Mean Response · 1 month</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:74px;line-height:1.02;letter-spacing:-.015em;color:var(--green)">Month-to-Month</h2>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">Monthly means surface the longest-range trends and make the recent rise in mean pressure clear.</p>
+      <div class="rise" style="--d:.3s;margin-top:42px;display:flex;flex-direction:column;gap:16px;font-size:24px">
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mPM);border-radius:3px"></span>PM1.0 (µg/m³)</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mTemp);border-radius:3px"></span>Temperature (°C)</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mPres);border-radius:3px"></span>Pressure (hPa)</span>
+      </div>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:34px;overflow:hidden">
+      <img src="assets/p7-chart.png" alt="Month to Month metric means over time" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/>
+    </div>
+  </div>
+</section>
+
+<!-- 8 · YEAR TO YEAR MEANS -->
+<section data-label="Year-to-Year means" data-screen-label="08 Year means" data-speaker-notes="Matched-year comparison. PM1.0 and temperature drift slightly downward year over year, while mean pressure steps up from 2025 into 2026." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Mean Response · 1 year</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:74px;line-height:1.02;letter-spacing:-.015em;color:var(--green)">Year-to-Year</h2>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">Matched old-vs-new period means. PM1.0 and temperature drift slightly down, while mean pressure steps up across years.</p>
+      <div class="rise" style="--d:.3s;margin-top:42px;display:flex;flex-direction:column;gap:16px;font-size:24px">
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:24px;height:24px;background:#9e9e9e;border-radius:3px"></span>Old period</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:24px;height:24px;background:var(--mPM);border-radius:3px"></span>New period</span>
+      </div>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:34px;overflow:hidden">
+      <img src="assets/p8-chart.png" alt="Year to Year metric means" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/>
+    </div>
+  </div>
+</section>
+
+<!-- 9 · SECTION II -->
+<section data-label="§ II — Significance" data-screen-label="09 Section II" data-speaker-notes="Section two: significance testing. Are the differences between adjacent periods statistically real, or just noise?" style="background:var(--green);color:var(--bg);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:110px;display:flex;flex-direction:column;justify-content:center;overflow:hidden">
+    <div class="rise" style="--d:.05s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Section</div>
+    <div style="display:flex;align-items:flex-start;gap:54px;margin-top:18px">
+      <div class="rise" style="--d:.12s;font-family:var(--serif);font-weight:300;font-size:300px;line-height:.8;color:rgba(244,241,234,.16)">II</div>
+      <div style="padding-top:30px">
+        <h2 class="rise" style="--d:.2s;margin:0;font-family:var(--serif);font-weight:600;font-size:118px;line-height:1.02;letter-spacing:-.02em">Significance Tests</h2>
+        <p class="rise" style="--d:.26s;margin:26px 0 0;font-family:var(--serif);font-style:italic;font-weight:300;font-size:38px;color:rgba(244,241,234,.78)">Welch's t-test for mean shift · Levene's test for variance shift · α = 0.01</p>
+        <div class="line" style="--d:.34s;width:200px;height:3px;background:var(--orange);margin-top:40px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 10 · DAY SIGNIFICANCE -->
+<section data-label="Day-to-Day sig." data-screen-label="10 Day sig" data-speaker-notes="Day-to-day significance. We plot negative log-10 of the p-value, so higher means a stronger shift. Anything below the red alpha=0.01 line is not significant. The dense high band shows most adjacent days genuinely differ." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Significance · 1 day</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:74px;line-height:1.02;letter-spacing:-.015em;color:var(--green)">Day-to-Day</h2>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px"><strong style="color:var(--green)">−log₁₀(p)</strong> — higher means a stronger shift. Points below the α = 0.01 line are not significant; the dense high band shows most adjacent days differ.</p>
+      <div class="rise" style="--d:.3s;margin-top:42px;display:flex;flex-direction:column;gap:16px;font-size:24px">
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mPM);border-radius:3px"></span>Welch — mean shift</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:#9b7fd4;border-radius:3px"></span>Levene — variance shift</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:0;border-top:3px dashed #d23b3b"></span>α = 0.01 threshold</span>
+      </div>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:34px;overflow:hidden">
+      <img src="assets/p10-chart.png" alt="Day to Day test significance vs time" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/>
+    </div>
+  </div>
+</section>
+
+<!-- 11 · WEEK SIGNIFICANCE -->
+<section data-label="Week-to-Week sig." data-screen-label="11 Week sig" data-speaker-notes="At weekly resolution, the significant shifts cluster around season changes and around the data gaps." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Significance · 7 days</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:74px;line-height:1.02;letter-spacing:-.015em;color:var(--green)">Week-to-Week</h2>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">At weekly resolution, significant shifts cluster around the seasonal turns and around the gaps in coverage.</p>
+      <div class="rise" style="--d:.3s;margin-top:42px;display:flex;flex-direction:column;gap:16px;font-size:24px">
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mPM);border-radius:3px"></span>Welch — mean shift</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:#9b7fd4;border-radius:3px"></span>Levene — variance shift</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:0;border-top:3px dashed #d23b3b"></span>α = 0.01 threshold</span>
+      </div>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:34px;overflow:hidden">
+      <img src="assets/p11-chart.png" alt="Week to Week test significance vs time" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/>
+    </div>
+  </div>
+</section>
+
+<!-- 12 · MONTH SIGNIFICANCE -->
+<section data-label="Month-to-Month sig." data-screen-label="12 Month sig" data-speaker-notes="Monthly comparisons isolate the largest, most persistent distribution changes — the shifts that survive aggregation." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Significance · 1 month</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:74px;line-height:1.02;letter-spacing:-.015em;color:var(--green)">Month-to-Month</h2>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">Monthly comparisons isolate the largest, most persistent distribution changes — the ones that survive aggregation.</p>
+      <div class="rise" style="--d:.3s;margin-top:42px;display:flex;flex-direction:column;gap:16px;font-size:24px">
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:var(--mPM);border-radius:3px"></span>Welch — mean shift</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:5px;background:#9b7fd4;border-radius:3px"></span>Levene — variance shift</span>
+        <span style="display:flex;align-items:center;gap:14px"><span style="width:28px;height:0;border-top:3px dashed #d23b3b"></span>α = 0.01 threshold</span>
+      </div>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:34px;overflow:hidden">
+      <img src="assets/p12-chart.png" alt="Month to Month test significance vs time" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/>
+    </div>
+  </div>
+</section>
+
+<!-- 13 · TEMPERATURE COMPARISONS -->
+<section data-label="Temp. comparisons" data-screen-label="13 Temp fits" data-speaker-notes="Temperature comparisons. On the left, each day's distribution with its best-fit model — here Weibull versus Exponential. On the right, the same data z-scored and tested against a standard normal." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:74px 90px 84px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Distribution Fits · °C</div>
+        <h2 class="rise" style="--d:.08s;margin:12px 0 0;font-family:var(--serif);font-weight:600;font-size:72px;line-height:1;letter-spacing:-.015em;color:var(--green)">Temperature Comparisons</h2>
+      </div>
+      <div class="rise" style="--d:.14s;font-size:24px;color:var(--muted);max-width:600px;text-align:right;line-height:1.45">Each day's distribution against its best-fit model, then the same data z-scored against N(0,1).</div>
+    </div>
+    <div style="flex:1;display:flex;gap:40px;margin-top:34px">
+      <div class="pop" style="--d:.2s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Best-fit distribution</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p13-chart1.png" alt="Temperature distribution best fit" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+      <div class="pop" style="--d:.3s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Z-scored vs standard normal</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p13-chart2.png" alt="Temperature z-scored histogram vs standard normal" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 14 · TEMPERATURE FIT 2 -->
+<section data-label="Temp. fit" data-screen-label="14 Temp fits" data-speaker-notes="Another temperature comparison pair — distribution fit on the left, normality check on the right." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:74px 90px 84px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Distribution Fits · °C</div>
+        <h2 class="rise" style="--d:.08s;margin:12px 0 0;font-family:var(--serif);font-weight:600;font-size:72px;line-height:1;letter-spacing:-.015em;color:var(--green)">Temperature Comparisons</h2>
+      </div>
+      <div class="rise" style="--d:.14s;font-size:24px;color:var(--muted);max-width:600px;text-align:right;line-height:1.45">Best-fit model versus the histogram, and the z-scored departure from a standard normal.</div>
+    </div>
+    <div style="flex:1;display:flex;gap:40px;margin-top:34px">
+      <div class="pop" style="--d:.2s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Best-fit distribution</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p14-chart1.png" alt="Temperature distribution best fit" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+      <div class="pop" style="--d:.3s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Z-scored vs standard normal</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p14-chart2.png" alt="Temperature z-scored histogram vs standard normal" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 15 · TEMPERATURE FIT 3 -->
+<section data-label="Temp. fit" data-screen-label="15 Temp fits" data-speaker-notes="A third temperature comparison pair." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:74px 90px 84px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Distribution Fits · °C</div>
+        <h2 class="rise" style="--d:.08s;margin:12px 0 0;font-family:var(--serif);font-weight:600;font-size:72px;line-height:1;letter-spacing:-.015em;color:var(--green)">Temperature Comparisons</h2>
+      </div>
+      <div class="rise" style="--d:.14s;font-size:24px;color:var(--muted);max-width:600px;text-align:right;line-height:1.45">Best-fit model versus the histogram, and the z-scored departure from a standard normal.</div>
+    </div>
+    <div style="flex:1;display:flex;gap:40px;margin-top:34px">
+      <div class="pop" style="--d:.2s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Best-fit distribution</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p15-chart1.png" alt="Temperature distribution best fit" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+      <div class="pop" style="--d:.3s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Z-scored vs standard normal</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p15-chart2.png" alt="Temperature z-scored histogram vs standard normal" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 16 · PM1 STAT-FITS -->
+<section data-label="PM1 stat-fits" data-screen-label="16 PM1 fits" data-speaker-notes="PM1.0 stat-fits. The daily PM1.0 distributions fit with generalized-gamma models, and the z-scored view checks how far they depart from normality." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:74px 90px 84px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Distribution Fits · PM1.0</div>
+        <h2 class="rise" style="--d:.08s;margin:12px 0 0;font-family:var(--serif);font-weight:600;font-size:72px;line-height:1;letter-spacing:-.015em;color:var(--green)">PM1 Stat-Fits</h2>
+      </div>
+      <div class="rise" style="--d:.14s;font-size:24px;color:var(--muted);max-width:600px;text-align:right;line-height:1.45">Daily PM1.0 distributions fit with generalized-gamma models; the z-scored view checks departure from normality.</div>
+    </div>
+    <div style="flex:1;display:flex;gap:40px;margin-top:34px">
+      <div class="pop" style="--d:.2s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Best-fit distribution</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p16-chart1.png" alt="PM1.0 distribution best fit" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+      <div class="pop" style="--d:.3s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Z-scored vs standard normal</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p16-chart2.png" alt="PM1.0 z-scored histogram vs standard normal" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 17 · PM1 FIT 2 -->
+<section data-label="PM1 stat-fit" data-screen-label="17 PM1 fits" data-speaker-notes="A second PM1.0 stat-fit pair." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:74px 90px 84px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Distribution Fits · PM1.0</div>
+        <h2 class="rise" style="--d:.08s;margin:12px 0 0;font-family:var(--serif);font-weight:600;font-size:72px;line-height:1;letter-spacing:-.015em;color:var(--green)">PM1 Stat-Fits</h2>
+      </div>
+      <div class="rise" style="--d:.14s;font-size:24px;color:var(--muted);max-width:600px;text-align:right;line-height:1.45">Generalized-gamma fits versus the histogram, and the z-scored departure from a standard normal.</div>
+    </div>
+    <div style="flex:1;display:flex;gap:40px;margin-top:34px">
+      <div class="pop" style="--d:.2s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Best-fit distribution</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p17-chart1.png" alt="PM1.0 distribution best fit" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+      <div class="pop" style="--d:.3s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Z-scored vs standard normal</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p17-chart2.png" alt="PM1.0 z-scored histogram vs standard normal" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 18 · PM1 FIT 3 -->
+<section data-label="PM1 stat-fit" data-screen-label="18 PM1 fits" data-speaker-notes="A third PM1.0 stat-fit pair." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:74px 90px 84px;display:flex;flex-direction:column">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end">
+      <div>
+        <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Distribution Fits · PM1.0</div>
+        <h2 class="rise" style="--d:.08s;margin:12px 0 0;font-family:var(--serif);font-weight:600;font-size:72px;line-height:1;letter-spacing:-.015em;color:var(--green)">PM1 Stat-Fits</h2>
+      </div>
+      <div class="rise" style="--d:.14s;font-size:24px;color:var(--muted);max-width:600px;text-align:right;line-height:1.45">Generalized-gamma fits versus the histogram, and the z-scored departure from a standard normal.</div>
+    </div>
+    <div style="flex:1;display:flex;gap:40px;margin-top:34px">
+      <div class="pop" style="--d:.2s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Best-fit distribution</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p18-chart1.png" alt="PM1.0 distribution best fit" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+      <div class="pop" style="--d:.3s;flex:1;display:flex;flex-direction:column;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 14px 40px rgba(21,71,52,.06);padding:24px 24px 18px;overflow:hidden">
+        <div style="font-family:var(--mono);font-size:24px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin-bottom:10px">Z-scored vs standard normal</div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;min-height:0"><img src="assets/p18-chart2.png" alt="PM1.0 z-scored histogram vs standard normal" style="max-width:100%;max-height:100%;object-fit:contain;display:block"/></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 19 · SECTION III -->
+<section data-label="§ III — Moving Window" data-screen-label="19 Section III" data-speaker-notes="Section three: the moving-window view. For each particle-size channel we sweep a one-hour window across the full hourly record and rebuild its probability density live. These play at four times speed." style="background:var(--green);color:var(--bg);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:110px;display:flex;flex-direction:column;justify-content:center;overflow:hidden">
+    <div class="rise" style="--d:.05s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Section</div>
+    <div style="display:flex;align-items:flex-start;gap:54px;margin-top:18px">
+      <div class="rise" style="--d:.12s;font-family:var(--serif);font-weight:300;font-size:300px;line-height:.8;color:rgba(244,241,234,.16)">III</div>
+      <div style="padding-top:30px">
+        <h2 class="rise" style="--d:.2s;margin:0;font-family:var(--serif);font-weight:600;font-size:108px;line-height:1.02;letter-spacing:-.02em">Moving-Window PDF</h2>
+        <p class="rise" style="--d:.26s;margin:26px 0 0;font-family:var(--serif);font-style:italic;font-weight:300;font-size:38px;color:rgba(244,241,234,.78)">A one-hour window sweeping the full hourly series, per particle channel · played at 4× speed</p>
+        <div class="line" style="--d:.34s;width:200px;height:3px;background:var(--orange);margin-top:40px"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 20 · PM0.1 VIDEO -->
+<section data-vslide data-label="PM0.1" data-screen-label="20 PM0.1" data-speaker-notes="PM0.1 — the smallest channel. Watch the one-hour window sweep across the record; the left panel is its live PDF. Playing at 4× speed." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Moving Window · 4× speed</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:96px;line-height:1;letter-spacing:-.02em;color:var(--green)">PM0.1</h2>
+      <div class="rise" style="--d:.12s;margin-top:6px;font-family:var(--serif);font-style:italic;font-size:30px;color:var(--muted)">µg/m³ · hourly series</div>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">A one-hour window sweeps left to right across the full series; the left panel rebuilds the window's probability density at each step.</p>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;position:relative;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:30px;overflow:hidden">
+      <video data-pmvideo src="assets/pm0_1.mp4" muted loop playsinline preload="auto" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></video>
+      <div style="position:absolute;left:26px;top:22px;display:flex;align-items:center;gap:12px;background:var(--green);color:var(--bg);padding:9px 18px;border-radius:30px"><span style="width:9px;height:9px;border-radius:50%;background:var(--orange)"></span><span style="font-family:var(--mono);font-size:24px;letter-spacing:.06em">PM0.1</span></div>
+      <div style="position:absolute;right:26px;top:22px;background:var(--orange);color:#fff;font-family:var(--mono);font-size:24px;letter-spacing:.04em;padding:9px 16px;border-radius:30px">4× speed</div>
+    </div>
+  </div>
+</section>
+
+<!-- 21 · PM0.3 VIDEO -->
+<section data-vslide data-label="PM0.3" data-screen-label="21 PM0.3" data-speaker-notes="PM0.3 channel, same moving-window treatment at 4× speed." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Moving Window · 4× speed</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:96px;line-height:1;letter-spacing:-.02em;color:var(--green)">PM0.3</h2>
+      <div class="rise" style="--d:.12s;margin-top:6px;font-family:var(--serif);font-style:italic;font-size:30px;color:var(--muted)">µg/m³ · hourly series</div>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">A one-hour window sweeps left to right across the full series; the left panel rebuilds the window's probability density at each step.</p>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;position:relative;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:30px;overflow:hidden">
+      <video data-pmvideo src="assets/pm0_3.mp4" muted loop playsinline preload="auto" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></video>
+      <div style="position:absolute;left:26px;top:22px;display:flex;align-items:center;gap:12px;background:var(--green);color:var(--bg);padding:9px 18px;border-radius:30px"><span style="width:9px;height:9px;border-radius:50%;background:var(--orange)"></span><span style="font-family:var(--mono);font-size:24px;letter-spacing:.06em">PM0.3</span></div>
+      <div style="position:absolute;right:26px;top:22px;background:var(--orange);color:#fff;font-family:var(--mono);font-size:24px;letter-spacing:.04em;padding:9px 16px;border-radius:30px">4× speed</div>
+    </div>
+  </div>
+</section>
+
+<!-- 22 · PM0.5 VIDEO -->
+<section data-vslide data-label="PM0.5" data-screen-label="22 PM0.5" data-speaker-notes="PM0.5 channel, same moving-window treatment at 4× speed." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Moving Window · 4× speed</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:96px;line-height:1;letter-spacing:-.02em;color:var(--green)">PM0.5</h2>
+      <div class="rise" style="--d:.12s;margin-top:6px;font-family:var(--serif);font-style:italic;font-size:30px;color:var(--muted)">µg/m³ · hourly series</div>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">A one-hour window sweeps left to right across the full series; the left panel rebuilds the window's probability density at each step.</p>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;position:relative;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:30px;overflow:hidden">
+      <video data-pmvideo src="assets/pm0_5.mp4" muted loop playsinline preload="auto" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></video>
+      <div style="position:absolute;left:26px;top:22px;display:flex;align-items:center;gap:12px;background:var(--green);color:var(--bg);padding:9px 18px;border-radius:30px"><span style="width:9px;height:9px;border-radius:50%;background:var(--orange)"></span><span style="font-family:var(--mono);font-size:24px;letter-spacing:.06em">PM0.5</span></div>
+      <div style="position:absolute;right:26px;top:22px;background:var(--orange);color:#fff;font-family:var(--mono);font-size:24px;letter-spacing:.04em;padding:9px 16px;border-radius:30px">4× speed</div>
+    </div>
+  </div>
+</section>
+
+<!-- 23 · PM1.0 VIDEO -->
+<section data-vslide data-label="PM1.0" data-screen-label="23 PM1.0" data-speaker-notes="PM1.0 channel, same moving-window treatment at 4× speed." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Moving Window · 4× speed</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:96px;line-height:1;letter-spacing:-.02em;color:var(--green)">PM1.0</h2>
+      <div class="rise" style="--d:.12s;margin-top:6px;font-family:var(--serif);font-style:italic;font-size:30px;color:var(--muted)">µg/m³ · hourly series</div>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">A one-hour window sweeps left to right across the full series; the left panel rebuilds the window's probability density at each step.</p>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;position:relative;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:30px;overflow:hidden">
+      <video data-pmvideo src="assets/pm1_0.mp4" muted loop playsinline preload="auto" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></video>
+      <div style="position:absolute;left:26px;top:22px;display:flex;align-items:center;gap:12px;background:var(--green);color:var(--bg);padding:9px 18px;border-radius:30px"><span style="width:9px;height:9px;border-radius:50%;background:var(--orange)"></span><span style="font-family:var(--mono);font-size:24px;letter-spacing:.06em">PM1.0</span></div>
+      <div style="position:absolute;right:26px;top:22px;background:var(--orange);color:#fff;font-family:var(--mono);font-size:24px;letter-spacing:.04em;padding:9px 16px;border-radius:30px">4× speed</div>
+    </div>
+  </div>
+</section>
+
+<!-- 24 · PM2.5 VIDEO -->
+<section data-vslide data-label="PM2.5" data-screen-label="24 PM2.5" data-speaker-notes="PM2.5 channel, same moving-window treatment at 4× speed." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Moving Window · 4× speed</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:96px;line-height:1;letter-spacing:-.02em;color:var(--green)">PM2.5</h2>
+      <div class="rise" style="--d:.12s;margin-top:6px;font-family:var(--serif);font-style:italic;font-size:30px;color:var(--muted)">µg/m³ · hourly series</div>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">A one-hour window sweeps left to right across the full series; the left panel rebuilds the window's probability density at each step.</p>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;position:relative;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:30px;overflow:hidden">
+      <video data-pmvideo src="assets/pm2_5.mp4" muted loop playsinline preload="auto" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></video>
+      <div style="position:absolute;left:26px;top:22px;display:flex;align-items:center;gap:12px;background:var(--green);color:var(--bg);padding:9px 18px;border-radius:30px"><span style="width:9px;height:9px;border-radius:50%;background:var(--orange)"></span><span style="font-family:var(--mono);font-size:24px;letter-spacing:.06em">PM2.5</span></div>
+      <div style="position:absolute;right:26px;top:22px;background:var(--orange);color:#fff;font-family:var(--mono);font-size:24px;letter-spacing:.04em;padding:9px 16px;border-radius:30px">4× speed</div>
+    </div>
+  </div>
+</section>
+
+<!-- 25 · PM5.0 VIDEO -->
+<section data-vslide data-label="PM5.0" data-screen-label="25 PM5.0" data-speaker-notes="PM5.0 channel, same moving-window treatment at 4× speed." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Moving Window · 4× speed</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:96px;line-height:1;letter-spacing:-.02em;color:var(--green)">PM5.0</h2>
+      <div class="rise" style="--d:.12s;margin-top:6px;font-family:var(--serif);font-style:italic;font-size:30px;color:var(--muted)">µg/m³ · hourly series</div>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">A one-hour window sweeps left to right across the full series; the left panel rebuilds the window's probability density at each step.</p>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;position:relative;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:30px;overflow:hidden">
+      <video data-pmvideo src="assets/pm5_0.mp4" muted loop playsinline preload="auto" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></video>
+      <div style="position:absolute;left:26px;top:22px;display:flex;align-items:center;gap:12px;background:var(--green);color:var(--bg);padding:9px 18px;border-radius:30px"><span style="width:9px;height:9px;border-radius:50%;background:var(--orange)"></span><span style="font-family:var(--mono);font-size:24px;letter-spacing:.06em">PM5.0</span></div>
+      <div style="position:absolute;right:26px;top:22px;background:var(--orange);color:#fff;font-family:var(--mono);font-size:24px;letter-spacing:.04em;padding:9px 16px;border-radius:30px">4× speed</div>
+    </div>
+  </div>
+</section>
+
+<!-- 26 · PM10.0 VIDEO -->
+<section data-vslide data-label="PM10.0" data-screen-label="26 PM10.0" data-speaker-notes="PM10.0 — the largest channel. Same moving-window treatment at 4× speed." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 96px;display:flex;gap:64px">
+    <div style="flex:none;width:520px;display:flex;flex-direction:column;justify-content:center">
+      <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.28em;text-transform:uppercase;color:var(--orange)">Moving Window · 4× speed</div>
+      <h2 class="rise" style="--d:.08s;margin:14px 0 0;font-family:var(--serif);font-weight:600;font-size:96px;line-height:1;letter-spacing:-.02em;color:var(--green)">PM10.0</h2>
+      <div class="rise" style="--d:.12s;margin-top:6px;font-family:var(--serif);font-style:italic;font-size:30px;color:var(--muted)">µg/m³ · hourly series</div>
+      <div class="line" style="--d:.16s;width:90px;height:3px;background:var(--orange);margin:30px 0"></div>
+      <p class="rise" style="--d:.22s;margin:0;font-size:29px;line-height:1.5;color:#34433a;max-width:460px">A one-hour window sweeps left to right across the full series; the left panel rebuilds the window's probability density at each step.</p>
+    </div>
+    <div class="pop" style="--d:.18s;flex:1;position:relative;background:var(--card);border-radius:6px;box-shadow:0 1px 3px rgba(0,0,0,.08),0 18px 50px rgba(21,71,52,.07);display:flex;align-items:center;justify-content:center;padding:30px;overflow:hidden">
+      <video data-pmvideo src="assets/pm10_0.mp4" muted loop playsinline preload="auto" style="max-width:100%;max-height:100%;object-fit:contain;display:block"></video>
+      <div style="position:absolute;left:26px;top:22px;display:flex;align-items:center;gap:12px;background:var(--green);color:var(--bg);padding:9px 18px;border-radius:30px"><span style="width:9px;height:9px;border-radius:50%;background:var(--orange)"></span><span style="font-family:var(--mono);font-size:24px;letter-spacing:.06em">PM10.0</span></div>
+      <div style="position:absolute;right:26px;top:22px;background:var(--orange);color:#fff;font-family:var(--mono);font-size:24px;letter-spacing:.04em;padding:9px 16px;border-radius:30px">4× speed</div>
+    </div>
+  </div>
+</section>
+
+<!-- 20 · FUTURE GOALS -->
+<section data-label="Future Goals" data-screen-label="20 Future Goals" data-speaker-notes="Where this goes next. On the research side: bring in Fort Worth data, separate seasonal change from real drift, and train an ML model to do that automatically — eventually correcting in real time or alerting on sensor failure. On the production side: publication-quality figures, higher-res GIFs rendered on GPU, and saving everything to Drive." style="background:var(--bg);color:var(--ink);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:90px 100px 100px;display:flex;flex-direction:column">
+    <div class="rise" style="--d:.02s;font-family:var(--mono);font-size:24px;letter-spacing:.3em;text-transform:uppercase;color:var(--orange)">Roadmap</div>
+    <h2 class="rise" style="--d:.08s;margin:12px 0 0;font-family:var(--serif);font-weight:600;font-size:84px;line-height:1;letter-spacing:-.015em;color:var(--green)">Future Goals</h2>
+    <div class="line" style="--d:.16s;width:100%;height:1px;background:var(--line);margin:40px 0 44px"></div>
+    <div style="flex:1;display:flex;gap:80px">
+      <div style="flex:1;display:flex;flex-direction:column">
+        <div class="rise" style="--d:.2s;font-family:var(--mono);font-size:24px;letter-spacing:.2em;text-transform:uppercase;color:var(--green2);margin-bottom:26px">Research</div>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:28px">
+          <li class="rise" style="--d:.26s;display:flex;gap:22px;align-items:flex-start"><span style="flex:none;margin-top:12px;width:12px;height:12px;background:var(--orange)"></span><span style="font-size:31px;line-height:1.4">Use <strong style="font-weight:600;color:var(--green)">Fort Worth data</strong> to check drift with the SAFE engine</span></li>
+          <li class="rise" style="--d:.32s;display:flex;gap:22px;align-items:flex-start"><span style="flex:none;margin-top:12px;width:12px;height:12px;background:var(--orange)"></span><span style="font-size:31px;line-height:1.4">Differentiate <strong style="font-weight:600;color:var(--green)">seasonal changes</strong> from <strong style="font-weight:600;color:var(--green)">real drift</strong></span></li>
+          <li class="rise" style="--d:.38s;display:flex;gap:22px;align-items:flex-start"><span style="flex:none;margin-top:12px;width:12px;height:12px;background:var(--orange)"></span><span style="font-size:31px;line-height:1.4">Train an <strong style="font-weight:600;color:var(--green)">ML model</strong> to make that distinction automatically</span></li>
+          <li class="rise" style="--d:.44s;display:flex;gap:22px;align-items:flex-start"><span style="flex:none;margin-top:12px;width:12px;height:12px;background:var(--orange)"></span><span style="font-size:31px;line-height:1.4">Correct in <strong style="font-weight:600;color:var(--green)">real time</strong> or alert for sensor failure / replacement</span></li>
+        </ul>
+      </div>
+      <div style="flex:none;width:2px;background:var(--line)"></div>
+      <div style="flex:1;display:flex;flex-direction:column">
+        <div class="rise" style="--d:.24s;font-family:var(--mono);font-size:24px;letter-spacing:.2em;text-transform:uppercase;color:var(--green2);margin-bottom:26px">Figures &amp; Production</div>
+        <ul style="list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:28px">
+          <li class="rise" style="--d:.3s;display:flex;gap:22px;align-items:flex-start"><span style="flex:none;margin-top:12px;width:12px;height:12px;background:var(--green2)"></span><span style="font-size:31px;line-height:1.4">Improve fonts on graph titles</span></li>
+          <li class="rise" style="--d:.36s;display:flex;gap:22px;align-items:flex-start"><span style="flex:none;margin-top:12px;width:12px;height:12px;background:var(--green2)"></span><span style="font-size:31px;line-height:1.4">Make figures <strong style="font-weight:600;color:var(--green)">publication-quality</strong></span></li>
+          <li class="rise" style="--d:.42s;display:flex;gap:22px;align-items:flex-start"><span style="flex:none;margin-top:12px;width:12px;height:12px;background:var(--green2)"></span><span style="font-size:31px;line-height:1.4">Re-generate GIFs / MP4s in Colab at higher resolution on GPU compute (<strong style="font-weight:600;color:var(--green)">300 dpi</strong>)</span></li>
+          <li class="rise" style="--d:.48s;display:flex;gap:22px;align-items:flex-start"><span style="flex:none;margin-top:12px;width:12px;height:12px;background:var(--green2)"></span><span style="font-size:31px;line-height:1.4">Save everything to personal Google Drive</span></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 21 · THANK YOU -->
+<section data-label="Thank You" data-screen-label="21 Thank You" data-speaker-notes="Thank you — happy to take questions." style="background:var(--green);color:var(--bg);font-family:var(--sans)">
+  <div style="position:relative;width:100%;height:100%;padding:110px;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;overflow:hidden">
+    <img src="assets/p27-thanks.png" class="pop" alt="UT Dallas" style="width:230px;margin-bottom:50px"/>
+    <h2 class="rise" style="--d:.16s;margin:0;font-family:var(--serif);font-weight:600;font-size:148px;line-height:1;letter-spacing:-.02em">Thank you</h2>
+    <div class="line" style="--d:.28s;width:140px;height:3px;background:var(--orange);margin:44px 0 36px"></div>
+    <div class="rise" style="--d:.34s;font-family:var(--mono);font-size:24px;letter-spacing:.22em;text-transform:uppercase;color:rgba(244,241,234,.72)">MINTS-AI · SAFE Engine · UT Dallas</div>
+  </div>
+</section>
+
+</x-import>
+</x-dc>
+<script type="text/x-dc" data-dc-script>
+class Component extends DCLogic {
+  componentDidMount() {
+    const RATE = 4;
+    const vids = () => Array.from(document.querySelectorAll('video[data-pmvideo]'));
+
+    const force = (v) => { try { v.playbackRate = RATE; } catch (e) {} };
+    const prep = (v) => {
+      if (v.__prepped) return; v.__prepped = true;
+      v.muted = true; v.loop = true; v.playsInline = true;
+      try { v.defaultPlaybackRate = RATE; } catch (e) {}
+      force(v);
+      v.addEventListener('loadedmetadata', () => force(v));
+      v.addEventListener('play', () => force(v));
+    };
+
+    const playActive = (slide) => {
+      vids().forEach((v) => {
+        prep(v);
+        if (slide && slide.contains(v)) {
+          force(v);
+          // If not loaded yet, call load() first then wait for canplay
+          if (v.readyState < 3) {
+            v.load();
+            const onReady = () => {
+              v.removeEventListener('canplay', onReady);
+              force(v);
+              const p = v.play();
+              if (p && p.catch) p.catch(() => {});
+              force(v);
+            };
+            v.addEventListener('canplay', onReady);
+          } else {
+            const p = v.play();
+            if (p && p.catch) p.catch(() => {});
+            force(v);
+          }
+        } else {
+          v.pause();
+        }
+      });
+    };
+
+    this._onChange = (e) => { playActive(e && e.detail && e.detail.slide); };
+    document.addEventListener('slidechange', this._onChange);
+
+    // ensure rate is held even if the browser resets it after play resolves
+    this._guard = setInterval(() => { vids().forEach((v) => { if (!v.paused && v.playbackRate !== RATE) force(v); }); }, 800);
+
+    // in case the deck already initialised before this listener attached
+    setTimeout(() => {
+      vids().forEach(prep);
+      playActive(document.querySelector('[data-deck-active]'));
+    }, 400);
+  }
+
+  componentWillUnmount() {
+    if (this._guard) clearInterval(this._guard);
+    if (this._onChange) document.removeEventListener('slidechange', this._onChange);
+  }
+
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>
